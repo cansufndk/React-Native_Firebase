@@ -1,0 +1,2 @@
+export const DEFAULT_ACTION = 'DEFAULT_ACTION';
+export const REQUEST_LOGIN = 'REQUEST_LOGIN';
