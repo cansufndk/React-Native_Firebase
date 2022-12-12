@@ -7,6 +7,8 @@ export const defaultAction = payload => {
   };
 };
 
+export const setApp = (key, value) => ({type: constants.SET_APP, key, value}); //set işlemlerinin hepsi için
+
 export const requestLogin = payload => {
   return async () => {
     //async işlemlerin oldugu yer

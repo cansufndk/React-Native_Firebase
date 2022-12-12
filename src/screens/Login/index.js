@@ -1,35 +1,36 @@
 import React, {useState} from 'react';
 import {Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {styles} from './style';
 
-const Login = () => {
+const Login = props => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const addLogin = value => {
     console.log(username, password);
-    setUsername('');
     setPassword('');
+    setUsername('');
   };
   return (
-    <>
-      <Text>Login sayfası</Text>
-
+    <View style={styles.container}>
       <TextInput
-        placeholder="username"
+        placeholder="Email"
         value={username}
         onChangeText={setUsername}
+        style={styles.username}
+        keyboardType="email-address"
       />
       <TextInput
-        placeholder="password"
+        placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
+        style={styles.password}
       />
-      <TouchableOpacity onPress={addLogin}>
-        <Text>Login</Text>
+      <TouchableOpacity onPress={addLogin} style={styles.login}>
+        <Text style={styles.butonText}>Login</Text>
       </TouchableOpacity>
-    </>
+    </View>
   );
 };
-
 export {Login};
