@@ -19,3 +19,10 @@ export const requestLogin = payload => {
     };
   };
 };
+
+export const addUser = payload => {
+  return {
+    type: constants.ADD_LOGIN,
+    payload,
+  };
+};

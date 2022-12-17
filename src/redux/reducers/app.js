@@ -11,8 +11,17 @@ export const app = (state = INITIAL_STATE, actionObj) => {
     case contants.DEFAULT_ACTION:
       return {...state, defaultParameter: actionObj.payload};
       break;
+
     case contants.SET_APP:
       return {...state, [actionObj.key]: actionObj.value};
+      break;
+
+    case contants.ADD_LOGIN:
+      console.log('reducers sayfası', actionObj.payload);
+      return {
+        ...((state.username = actionObj.payload) +
+          (state.password = actionObj.payload)),
+      };
       break;
     default:
       return state;
