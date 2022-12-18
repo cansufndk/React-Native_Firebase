@@ -1,32 +1,22 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
+import {RegisterStack, LoginStack, HomeStack} from './stack';
+import {connect} from 'react-redux';
 
-import {LoginStack} from './stack/loginStack';
-import {HomeStack} from './stack/homeStack';
-import {useSelector} from 'react-redux';
+const Navigation = connect(
+  ({app}) => ({app}),
+  undefined,
+)(props => {
+  const {app} = props;
+  const {loginStatus} = app;
+  console.log('Navigasyon', props);
 
-const Navigation = props => {
-  const state = useSelector(state => state.app);
-  console.log('navigation sayfası', state);
-  return (
+  return useMemo(() => (
     <NavigationContainer>
-      <LoginStack />
+      <HomeStack />
     </NavigationContainer>
-  );
-};
+  ));
+});
 export {Navigation};
-/**
- * import {NavigationContainer} from '@react-navigation/native';
-import {LoginStack} from './stack/loginStack';
-
-const Navigation = () => {
-  return (
-    <NavigationContainer>
-      <LoginStack />
-    </NavigationContainer>
-  );
-};
-
-export {Navigation};
-
+/**      {loginStatus ? <RegisterStack /> : <LoginStack />}
  */

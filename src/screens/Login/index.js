@@ -5,8 +5,7 @@ import {addUser} from '../../redux/actions/app';
 import {styles} from './style';
 import {Home} from '../Home';
 
-const Login = ({navigation}, props) => {
-  //console.log(navigation);
+const Login = props => {
   const dispatch = useDispatch();
 
   const [username, setUsername] = useState('');
@@ -17,7 +16,6 @@ const Login = ({navigation}, props) => {
     dispatch(addUser(password));
     setPassword('');
     setUsername('');
-    //navigation.goback();
   };
   return (
     <View style={styles.container}>
@@ -39,7 +37,9 @@ const Login = ({navigation}, props) => {
       <TouchableOpacity onPress={addLogin} style={styles.login}>
         <Text style={styles.butonText}>Login</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={addLogin} style={styles.register}>
+      <TouchableOpacity
+        onPress={() => console.log('click')}
+        style={styles.register}>
         <Text style={styles.registertext}>Register</Text>
       </TouchableOpacity>
     </View>

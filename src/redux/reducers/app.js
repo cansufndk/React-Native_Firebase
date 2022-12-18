@@ -4,6 +4,8 @@ const INITIAL_STATE = {
   defaultParameter: false,
   username: '',
   password: '',
+
+  loginStatus: false,
 };
 
 export const app = (state = INITIAL_STATE, actionObj) => {

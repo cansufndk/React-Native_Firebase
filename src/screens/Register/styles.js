@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.lightgrey,
+    backgroundColor: colors.neigth,
   },
   username: {
     borderColor: colors.darkgrey,
@@ -14,43 +14,36 @@ export const styles = StyleSheet.create({
     width: '75%',
     fontSize: 17,
     backgroundColor: colors.white,
+    marginVertical: 2,
   },
-  password: {
-    borderColor: colors.darkgrey,
-    borderRadius: 5,
-    width: '75%',
-    fontSize: 17,
-    backgroundColor: colors.white,
-    marginVertical: 6,
-  },
-  login: {
+  register: {
     width: '75%',
     padding: 10,
     borderRadius: 5,
     backgroundColor: colors.yellow,
+    marginVertical: 7,
   },
-  butonText: {
+  registertext: {
     fontSize: 17,
     textAlign: 'center',
     color: colors.darkgrey,
     fontWeight: 'bold',
   },
-  register: {
+  login: {
     width: '50%',
     padding: 10,
     borderRadius: 5,
-    backgroundColor: colors.grey,
-    marginVertical: 10,
+    backgroundColor: colors.lightgrey,
   },
-  registertext: {
+  logintext: {
     fontSize: 17,
     textAlign: 'center',
-    color: colors.white,
+    color: colors.neigth,
     fontWeight: 'bold',
   },
   image: {
-    height: '60%',
     width: '100%',
+    height: '50%',
     resizeMode: 'contain',
   },
 });
