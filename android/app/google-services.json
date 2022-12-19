@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1022563259974",
+    "firebase_url": "https://rnshoping-default-rtdb.firebaseio.com",
+    "project_id": "rnshoping",
+    "storage_bucket": "rnshoping.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022563259974:android:20232bffa8959a54dc5c47",
+        "android_client_info": {
+          "package_name": "com.shoppingreactnative"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022563259974-apm12ak255vq4rsu9cvtglre7fahflem.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCujL2Y5dY0y6xXIv4ydtItaIvrzeNfFFI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1022563259974-apm12ak255vq4rsu9cvtglre7fahflem.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

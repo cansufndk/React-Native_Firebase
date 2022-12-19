@@ -1,32 +1,48 @@
 import * as contants from '../constans';
 
 const INITIAL_STATE = {
-  defaultParameter: false,
+  email: '',
   username: '',
   password: '',
-
+  user: {},
   loginStatus: false,
+  signupStatus: false,
 };
 
-export const app = (state = INITIAL_STATE, actionObj) => {
+const app = (state = INITIAL_STATE, actionObj) => {
   switch (actionObj.type) {
-    case contants.DEFAULT_ACTION:
-      return {...state, defaultParameter: actionObj.payload};
-      break;
-
-    case contants.SET_APP:
-      return {...state, [actionObj.key]: actionObj.value};
-      break;
-
-    case contants.ADD_LOGIN:
-      console.log('reducers sayfası', actionObj.payload);
+    case contants.SET_ACCOUNT:
       return {
-        ...((state.username = actionObj.payload) +
-          (state.password = actionObj.payload)),
+        ...state,
+        user: {...state.user, [actionObj.key]: actionObj.value},
+        [actionObj.key]: actionObj.value,
       };
-      break;
+
+    case contants.REQUEST_SIGN_IN:
+      return {
+        ...state,
+        password: '',
+        loginStatus: true,
+      };
+
+    case contants.REQUEST_SIGN_UP:
+      return {
+        ...state,
+        password: '',
+        signupStatus: true,
+      };
+
+    case contants.REQUEST_SIGN_OUT:
+      return {
+        ...state,
+        signupStatus: false,
+        loginStatus: false,
+      };
+
     default:
       return state;
       break;
   }
 };
+
+export {app};

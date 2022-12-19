@@ -1,48 +1,48 @@
-import React, {useState} from 'react';
+import React, {useMemo} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {Text, TextInput, TouchableOpacity, View, Image} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {addUser} from '../../redux/actions/app';
+import {connect, useSelector} from 'react-redux';
+import {createUserFb, setAccount, userSignUp} from '../../redux/actions/app';
 import {styles} from './style';
-import {Home} from '../Home';
 
-const Login = props => {
-  const dispatch = useDispatch();
+//const mapStateToProps = states => ({app: states.app});
+const mapDispatchToProps = dispatch => ({dispatch});
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const Login = connect(mapDispatchToProps)(props => {
+  const {dispatch} = props;
+  const navigation = useNavigation();
+  const state = useSelector(state => state.app);
+  console.log('Login sayfası', state);
 
-  const addLogin = value => {
-    dispatch(addUser(username));
-    dispatch(addUser(password));
-    setPassword('');
-    setUsername('');
+  const createUser = () => {
+    dispatch(userSignUp());
   };
-  return (
+  return useMemo(() => (
     <View style={styles.container}>
       <Image source={require('../../assets/login.png')} style={styles.image} />
       <TextInput
         placeholder="Email"
-        value={username}
-        onChangeText={setUsername}
+        value={state.email}
+        onChangeText={d => dispatch(setAccount('email', d))}
         style={styles.username}
         keyboardType="email-address"
       />
       <TextInput
         placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
+        value={state.password}
+        onChangeText={d => dispatch(setAccount('password', d))}
         secureTextEntry
         style={styles.password}
       />
-      <TouchableOpacity onPress={addLogin} style={styles.login}>
+      <TouchableOpacity style={styles.login} onPress={createUser}>
         <Text style={styles.butonText}>Login</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => console.log('click')}
+        onPress={() => navigation.navigate('Login')}
         style={styles.register}>
         <Text style={styles.registertext}>Register</Text>
       </TouchableOpacity>
     </View>
-  );
-};
+  ));
+});
 export {Login};
