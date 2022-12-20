@@ -16,7 +16,7 @@ const Register = connect(mapDispatchToProps)(props => {
 
   const register = () => {
     dispatch(createUserFb());
-    navigation.navigate('Login');
+    //navigation.navigate('Login');
   };
 
   return (

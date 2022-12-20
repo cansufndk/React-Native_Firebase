@@ -36,6 +36,9 @@ const app = (state = INITIAL_STATE, actionObj) => {
     case contants.REQUEST_SIGN_OUT:
       return {
         ...state,
+        username: '',
+        lastname: '',
+        email: '',
         signupStatus: false,
         loginStatus: false,
       };

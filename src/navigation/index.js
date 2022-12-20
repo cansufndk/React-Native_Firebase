@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {LoginStack, HomeStack, RegisterStack} from './stack';
-import {connect, useSelector} from 'react-redux';
+import {LoginStack, HomeStack} from './stack';
+import {connect} from 'react-redux';
 
 const Navigation = connect(
   ({app}) => ({app}),
@@ -9,7 +9,7 @@ const Navigation = connect(
 )(props => {
   return useMemo(() => (
     <NavigationContainer>
-      <LoginStack />
+      {props.app.signupStatus ? <HomeStack /> : <LoginStack />}
     </NavigationContainer>
   ));
 });

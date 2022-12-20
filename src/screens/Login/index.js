@@ -25,12 +25,11 @@ const Login = connect(mapDispatchToProps)(props => {
 
   const user = () => {
     const user = auth().currentUser;
-    console.log('Curren User', user);
+    console.log('Current User', user);
   };
 
   const loginSubmit = () => {
     dispatch(userSignUp());
-    navigation.navigate('Home', {screen: 'Home'});
   };
 
   const out = () => {

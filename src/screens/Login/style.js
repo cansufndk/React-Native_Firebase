@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   image: {
-    height: '60%',
+    height: '55%',
     width: '100%',
     resizeMode: 'contain',
   },
