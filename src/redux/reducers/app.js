@@ -3,6 +3,7 @@ import * as contants from '../constans';
 const INITIAL_STATE = {
   email: '',
   username: '',
+  lastname: '',
   password: '',
   user: {},
   loginStatus: false,
@@ -22,14 +23,14 @@ const app = (state = INITIAL_STATE, actionObj) => {
       return {
         ...state,
         password: '',
-        loginStatus: true,
+        signupStatus: true,
       };
 
     case contants.REQUEST_SIGN_UP:
       return {
         ...state,
         password: '',
-        signupStatus: true,
+        loginStatus: true,
       };
 
     case contants.REQUEST_SIGN_OUT:

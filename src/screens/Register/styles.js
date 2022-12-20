@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     backgroundColor: colors.yellow,
-    marginVertical: 7,
+    marginVertical: 5,
   },
   registertext: {
     fontSize: 17,
@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
   },
   login: {
     width: '50%',
-    padding: 10,
+    padding: 9,
     borderRadius: 5,
     backgroundColor: colors.lightgrey,
   },

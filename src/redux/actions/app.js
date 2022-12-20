@@ -7,16 +7,14 @@ export const setAccount = (key, value) => ({
   value,
 });
 
-export const createUserFb = payload => async (dispatch, getState) => {
+export const userSignUp = payload => async (dispatch, getState) => {
+  //loginuser
   const {email, password} = getState().app;
-  console.log(email, password);
   dispatch({type: constants.REQUEST_SIGN_IN});
 
   try {
-    await auth.createUserFb(email, password);
+    await auth.userSignUp(email, password);
     const user = await auth.getUserInfo();
-    console.log(user);
-
     dispatch({
       type: constants.REQUEST_SIGN_IN,
       payload: user,
@@ -26,11 +24,12 @@ export const createUserFb = payload => async (dispatch, getState) => {
   }
 };
 
-export const userSignUp = payload => async (dispatch, getState) => {
+export const createUserFb = payload => async (dispatch, getState) => {
+  //createuser
   const {email, password} = getState().app;
   dispatch({type: constants.REQUEST_SIGN_UP});
   try {
-    await auth.userSignUp(email, password);
+    await auth.createUserFb(email, password);
     dispatch({
       type: constants.REQUEST_SIGN_UP,
     });
@@ -40,6 +39,7 @@ export const userSignUp = payload => async (dispatch, getState) => {
 };
 
 export const userSignout = payload => async dispatch => {
+  //logout user
   dispatch({type: constants.REQUEST_SIGN_OUT});
   try {
     await auth.userSignout();

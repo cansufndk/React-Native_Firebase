@@ -10,8 +10,14 @@ const mapDispatchToProps = dispatch => ({dispatch});
 const Register = connect(mapDispatchToProps)(props => {
   const {dispatch} = props;
   const navigation = useNavigation();
+
   const state = useSelector(state => state.app);
   console.log('Register sayfası', state);
+
+  const register = () => {
+    dispatch(createUserFb());
+    navigation.navigate('Login');
+  };
 
   return (
     <View style={styles.container}>
@@ -21,6 +27,12 @@ const Register = connect(mapDispatchToProps)(props => {
         style={styles.username}
         value={state.username}
         onChangeText={d => dispatch(setAccount('username', d))}
+      />
+      <TextInput
+        placeholder="Last Name"
+        style={styles.username}
+        value={state.lastname}
+        onChangeText={d => dispatch(setAccount('lastname', d))}
       />
       <TextInput
         placeholder="Email"
@@ -36,14 +48,12 @@ const Register = connect(mapDispatchToProps)(props => {
         secureTextEntry
         onChangeText={d => dispatch(setAccount('password', d))}
       />
-      <TouchableOpacity
-        style={styles.register}
-        onPress={() => dispatch(createUserFb())}>
-        <Text style={styles.registertext}>Register</Text>
+      <TouchableOpacity style={styles.register} onPress={register}>
+        <Text style={styles.registertext}>Create Account</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.login}
-        onPress={() => navigation.navigate('Login')}>
+        onPress={() => navigation.navigate('Login', {screen: 'Login'})}>
         <Text style={styles.logintext}>Login</Text>
       </TouchableOpacity>
     </View>

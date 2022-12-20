@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth';
 
 export const createUserFb = async (email, password) => {
+  //yeni kullanıcı oluşturmak için firebase auth
   try {
     await auth().createUserWithEmailAndPassword(email, password);
     console.log('User account created & signed in!');
@@ -16,19 +17,22 @@ export const createUserFb = async (email, password) => {
 };
 
 export const getUserInfo = () => {
+  //kullanıcı bilgileri
   const user = auth().currentUser.uid;
   return user;
 };
 
 export const userSignUp = async (email, password) => {
+  //kullanıcı giriş yapması için
   try {
-    await auth().createUserWithEmailAndPassword(email, password);
+    await auth().signInWithEmailAndPassword(email, password);
   } catch (error) {
     console.log(error);
   }
 };
 
 export const userSignout = async () => {
+  //kullanıcı çıkış yapması için
   try {
     await auth().signOut();
   } catch (error) {

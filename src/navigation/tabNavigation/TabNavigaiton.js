@@ -1,10 +1,11 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import * as screens from '../../screens';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as screens from '../../screens';
+
 const Tab = createBottomTabNavigator();
 
-export const TabNavigation = () => {
+const TabNavigation = () => {
   <Tab.Navigator>
     <Tab.Screen
       name="Home"
@@ -54,3 +55,5 @@ export const TabNavigation = () => {
     />
   </Tab.Navigator>;
 };
+
+export default TabNavigation;
