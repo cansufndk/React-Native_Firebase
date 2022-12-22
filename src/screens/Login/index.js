@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {
   Text,
@@ -11,6 +11,7 @@ import {
 import {connect, useSelector} from 'react-redux';
 import {setAccount, userSignUp, userSignout} from '../../redux/actions/app';
 import {styles} from './style';
+import {showMessage} from 'react-native-flash-message';
 
 import auth from '@react-native-firebase/auth';
 
@@ -18,6 +19,7 @@ import auth from '@react-native-firebase/auth';
 const mapDispatchToProps = dispatch => ({dispatch});
 
 const Login = connect(mapDispatchToProps)(props => {
+  const [loading, setLoading] = useState(false);
   const {dispatch} = props;
   const navigation = useNavigation();
   const state = useSelector(state => state.app);
@@ -29,7 +31,13 @@ const Login = connect(mapDispatchToProps)(props => {
   };
 
   const loginSubmit = () => {
+    setLoading(true);
     dispatch(userSignUp());
+    showMessage({
+      message: 'Login successful!',
+      type: 'success',
+    });
+    setLoading(false);
   };
 
   const out = () => {
@@ -52,7 +60,10 @@ const Login = connect(mapDispatchToProps)(props => {
         secureTextEntry
         style={styles.password}
       />
-      <TouchableOpacity style={styles.login} onPress={loginSubmit}>
+      <TouchableOpacity
+        style={styles.login}
+        onPress={loginSubmit}
+        loading={loading}>
         <Text style={styles.butonText}>Login</Text>
       </TouchableOpacity>
 

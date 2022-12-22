@@ -4,6 +4,7 @@ import {View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
 import {connect, useSelector} from 'react-redux';
 import {createUserFb, setAccount} from '../../redux/actions/app';
 import {styles} from './styles';
+import {showMessage} from 'react-native-flash-message';
 
 const mapDispatchToProps = dispatch => ({dispatch});
 
@@ -16,7 +17,11 @@ const Register = connect(mapDispatchToProps)(props => {
 
   const register = () => {
     dispatch(createUserFb());
-    //navigation.navigate('Login');
+    showMessage({
+      message: 'Sign Up successful!',
+      type: 'success',
+    });
+    navigation.navigate('Login');
   };
 
   return (
