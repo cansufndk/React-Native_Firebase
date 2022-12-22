@@ -8,6 +8,7 @@ const Navigation = connect(
   undefined,
 )(props => {
   return useMemo(() => (
+    //loginse home göster değilse login göster
     <NavigationContainer>
       {props.app.signupStatus ? <HomeStack /> : <LoginStack />}
     </NavigationContainer>
