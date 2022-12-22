@@ -41,14 +41,14 @@ const TabNavigation = () => {
             if (focused)
               return (
                 <MaterialCommunityIcons
-                  name="account"
+                  name="bookmark"
                   color={'#424642'}
                   size={size}
                 />
               );
             return (
               <MaterialCommunityIcons
-                name="account-outline"
+                name="bookmark-outline"
                 color={color}
                 size={size}
               />
@@ -65,14 +65,14 @@ const TabNavigation = () => {
             if (focused)
               return (
                 <MaterialCommunityIcons
-                  name="account"
+                  name="cart"
                   color={'#424642'}
                   size={size}
                 />
               );
             return (
               <MaterialCommunityIcons
-                name="account-outline"
+                name="cart-outline"
                 color={color}
                 size={size}
               />

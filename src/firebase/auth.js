@@ -1,4 +1,6 @@
 import auth from '@react-native-firebase/auth';
+import authErrorMessage from './authErrorMessage';
+import {showMessage} from 'react-native-flash-message';
 
 export const createUserFb = async (email, password) => {
   //yeni kullanıcı oluşturmak için firebase auth
@@ -6,6 +8,10 @@ export const createUserFb = async (email, password) => {
     await auth().createUserWithEmailAndPassword(email, password);
     console.log('User account created & signed in!');
   } catch (error) {
+    showMessage({
+      message: authErrorMessage(error.code),
+      type: 'danger',
+    });
     if (error.code === 'auth/email-already-in-use') {
       console.log('That email address is already in use!');
     }
@@ -27,6 +33,10 @@ export const userSignUp = async (email, password) => {
   try {
     await auth().signInWithEmailAndPassword(email, password);
   } catch (error) {
+    showMessage({
+      message: authErrorMessage(error.code),
+      type: 'danger',
+    });
     console.log(error);
   }
 };

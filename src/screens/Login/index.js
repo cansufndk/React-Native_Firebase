@@ -11,6 +11,7 @@ import {
 import {connect, useSelector} from 'react-redux';
 import {setAccount, userSignUp, userSignout} from '../../redux/actions/app';
 import {styles} from './style';
+import authErrorMessage from '../../firebase/authErrorMessage';
 import {showMessage} from 'react-native-flash-message';
 
 import auth from '@react-native-firebase/auth';
@@ -34,7 +35,7 @@ const Login = connect(mapDispatchToProps)(props => {
     setLoading(true);
     dispatch(userSignUp());
     showMessage({
-      message: 'Login successful!',
+      message: 'Login Succesful!',
       type: 'success',
     });
     setLoading(false);
