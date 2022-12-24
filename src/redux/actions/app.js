@@ -53,25 +53,14 @@ export const userSignout = payload => async dispatch => {
 
 export const requestAllProducts = payload => async (dispatch, getState) => {
   //const {response} = await products.getAllProducts();
+  //axios ile dataları çekmek için
   try {
     const response = await products.getAllProducts(response);
-    //console.log(payload);
-    //console.log('RESPONSE', response);
-    //await products.getAllProducts();
+
     dispatch({type: constants.REQUEST_GET_ALL_PRODUCTS, payload: response});
-    //console.log('RESPONSE', response);
   } catch (error) {
     console.log('DATA ERROR', error);
   }
-  /*if (response) {
-    dispatch({
-      type: constants.REQUEST_GET_ALL_PRODUCTS,
-      payload: response,
-    });
-  } else {
-    console.log('data yok');
-  }*/
-  //console.log('Actions DAta', response);
 };
 
 export const requestAddProductsToFirebase =

@@ -7,26 +7,13 @@ export const getAllProducts = (payload = async () => {
       await axios.get('https://fakestoreapi.com/products')
     ).data;
     return response;
-    //console.log('Products Fetch', response);
   } catch (error) {}
 });
-//console.log('response obj', responseObj);
 
-/*export const getAllProductsAxios = async () => {
+export const addProductToFirebase = async (payload, uid) => {
+  const products = database().ref('/products').push();
+
   try {
-    let responseObj = await await axios.get('https://dummyjson.com/products');
-    console.log('Response obj', responseObj);
-    //return responseObj;
-  } catch (error) {
-    console.log('data gelmedi', error);
-  }
-};*/
-
-export const addProductToFirebase = async (item, uid) => {
-  try {
-    const ref = database().ref('/products').push();
-    const key = ref.key;
-
     await ref.set(item);
     await database().ref(`/user_products/${uid}`).push().set(key);
 

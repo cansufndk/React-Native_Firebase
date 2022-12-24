@@ -18,14 +18,14 @@ const TabNavigation = () => {
               return (
                 <MaterialCommunityIcons
                   name="home"
-                  color={'#424642'}
+                  color={'#FF6E31'}
                   size={size}
                 />
               );
             return (
               <MaterialCommunityIcons
                 name="home-outline"
-                color={color}
+                color={'#FF6E31'}
                 size={size}
               />
             );
@@ -41,15 +41,15 @@ const TabNavigation = () => {
             if (focused)
               return (
                 <MaterialCommunityIcons
-                  name="bookmark"
-                  color={'#424642'}
+                  name="heart"
+                  color={'#FF6E31'}
                   size={size}
                 />
               );
             return (
               <MaterialCommunityIcons
-                name="bookmark-outline"
-                color={color}
+                name="heart-outline"
+                color={'#FF6E31'}
                 size={size}
               />
             );
@@ -66,14 +66,14 @@ const TabNavigation = () => {
               return (
                 <MaterialCommunityIcons
                   name="cart"
-                  color={'#424642'}
+                  color={'#FF6E31'}
                   size={size}
                 />
               );
             return (
               <MaterialCommunityIcons
                 name="cart-outline"
-                color={color}
+                color={'#FF6E31'}
                 size={size}
               />
             );
@@ -90,14 +90,14 @@ const TabNavigation = () => {
               return (
                 <MaterialCommunityIcons
                   name="account"
-                  color={'#424642'}
+                  color={'#FF6E31'}
                   size={size}
                 />
               );
             return (
               <MaterialCommunityIcons
                 name="account-outline"
-                color={color}
+                color={'#FF6E31'}
                 size={size}
               />
             );
