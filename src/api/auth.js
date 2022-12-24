@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth';
 
-import endpoints from '~/api/endpoints';
-import {post} from './service';
+import endpoints from './endpoints';
+import {post} from '../firebase/service';
 
 export const login = async (username, password) => {
   let responseObj = await post(

@@ -1,16 +1,24 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {LoginStack, HomeStack} from './stack';
 import {connect} from 'react-redux';
+import auth from '@react-native-firebase/auth';
 
 const Navigation = connect(
   ({app}) => ({app}),
   undefined,
 )(props => {
+  const [successUser, setSuccessUser] = useState();
+
+  useEffect(() => {
+    auth().onAuthStateChanged(user => {
+      setSuccessUser(!!user);
+    });
+  });
   return useMemo(() => (
-    //loginse home göster değilse login göster
+    //kullanıcı varsa home null sa login göster
     <NavigationContainer>
-      {props.app.signupStatus ? <HomeStack /> : <LoginStack />}
+      {!successUser ? <LoginStack /> : <HomeStack />}
     </NavigationContainer>
   ));
 });

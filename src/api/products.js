@@ -1,7 +1,7 @@
 import database from '@react-native-firebase/database';
 
 import endpoints from '~/api/endpoints';
-import {get, post} from './service';
+import {get, post} from '../firebase/service';
 
 export const getAllProducts = async () => {
   let responseObj = await get(endpoints.products);

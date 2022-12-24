@@ -13,7 +13,7 @@ const Register = connect(mapDispatchToProps)(props => {
   const navigation = useNavigation();
 
   const state = useSelector(state => state.app);
-  console.log('Register sayfası', state);
+  //console.log('Register sayfası', state);
 
   const register = () => {
     dispatch(createUserFb());

@@ -37,6 +37,7 @@ const Login = connect(mapDispatchToProps)(props => {
     showMessage({
       message: 'Login Succesful!',
       type: 'success',
+      icon: 'success',
     });
     setLoading(false);
   };

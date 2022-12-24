@@ -1,4 +1,4 @@
-import endpoints, {baseurl} from './endpoints';
+import endpoints, {baseurl} from '../products/endpoints';
 
 export const post = (endpoint, body) => {
   return new Promise((resolve, reject) => {
