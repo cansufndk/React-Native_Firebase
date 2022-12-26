@@ -41,6 +41,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#FFEBB7',
     borderBottomLeftRadius: 3,
     borderBottomRightRadius: 3,
+    justifyContent: 'space-between',
   },
   category: {
     fontWeight: 'bold',

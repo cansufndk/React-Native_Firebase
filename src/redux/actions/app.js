@@ -83,20 +83,17 @@ export const requestAddProductsToFirebase =
 
 export const requestGetAllProductsFromFirebase =
   payload => async (dispatch, getState) => {
-    const {user} = getState().app;
+    const {userInfo} = getState().app;
+    console.log('user info', userInfo);
 
-    const {data, success} = await products.getAllPRoductsFromFirebase(
-      user.user.uid,
-    );
-    console.log(user);
-
-    if (success) {
+    const data = await products.getAllPRoductsFromFirebase(userInfo.user.uid);
+    console.log(
+      'DATA',
       dispatch({
         type: constants.REQUEST_GET_PRODUCTS_FB,
         payload: data,
-      });
-    } else {
-    }
+      }),
+    );
   };
 
 export const firebaseProductsListener =

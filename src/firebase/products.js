@@ -1,14 +1,22 @@
 import database from '@react-native-firebase/database';
-import axios from 'axios';
 
 export const getAllProducts = (payload = async () => {
+  //verileri databaseden çekmek için
   try {
-    let response = await (
-      await axios.get('https://fakestoreapi.com/products')
-    ).data;
+    const response = (await database().ref('/Products').once('value')).val();
     return response;
   } catch (error) {}
 });
+
+/* 
+ db ;
+ ref: referans oluşturmak için
+ once: tek seferlik veri okumak için
+ set: verileri referans olarak verdiğimize yazar
+ push: verileri göndermeden önce görmek için
+ update: verileri güncellemek için
+ 
+*/
 
 export const addProductToFirebase = async (payload, uid) => {
   const products = database().ref('/products').push();
@@ -23,16 +31,24 @@ export const addProductToFirebase = async (payload, uid) => {
   }
 };
 
-export const getPRoductFromFirebase = async key => {
+export const getPRoductFromFirebase = async (payload, key) => {
   try {
+    const productsRef = database().ref('/Products');
+    const item = await (await productsRef.child(key).once('value')).val();
+    return item;
+  } catch (error) {
+    console.log('getPRoductFromFirebase', error);
+  }
+  /*try {
     const productsRef = database().ref('/products');
     const item = (await productsRef.child(key).once('value')).val();
-    return {data: item, success: true};
+    // return { item};
+    console.log('PRODUCT REF');
   } catch (error) {
     console.log('getPRoductFromFirebase', error);
 
     return {data: null, success: false};
-  }
+  }*/
 };
 
 export const getAllPRoductsFromFirebase = async uid => {
@@ -47,12 +63,11 @@ export const getAllPRoductsFromFirebase = async uid => {
     for (let i = 0; i < keys.length; i++) {
       products.push((await getPRoductFromFirebase(keys[i])).data);
     }
-
-    return {data: products, success: true};
+    return products;
+    //return {data: products, success: true};
   } catch (error) {
     console.log('getAllPRoductsFromFirebase', error);
-
-    return {data: null, success: false};
+    //return {data: null, success: false};
   }
 };
 

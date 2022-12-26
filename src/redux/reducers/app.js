@@ -9,8 +9,11 @@ const INITIAL_STATE = {
   loginStatus: false,
   signupStatus: false,
 
+  userInfo: {},
+
   products: {
     list: [],
+    id: '',
   },
 };
 
@@ -67,6 +70,7 @@ const app = (state = INITIAL_STATE, actionObj) => {
         ...state,
         products: {
           list: actionObj.payload,
+          id: actionObj.payload,
         },
       };
     }
