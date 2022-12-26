@@ -34,7 +34,7 @@ const TabNavigation = () => {
       />
 
       <Tab.Screen
-        name="Details"
+        name="Favorites"
         component={screens.Details}
         options={{
           tabBarIcon: ({color, focused, size}) => {
@@ -58,7 +58,7 @@ const TabNavigation = () => {
       />
 
       <Tab.Screen
-        name="Basket"
+        name="Baskets"
         component={screens.Basket}
         options={{
           tabBarIcon: ({color, focused, size}) => {

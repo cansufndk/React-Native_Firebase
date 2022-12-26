@@ -1,21 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity, FlatList, Image} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  Image,
+  TextInput,
+} from 'react-native';
 import {connect, useSelector} from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {
-  firebaseProductsListener,
-  requestAddProductsToFirebase,
-  requestGetAllProductsFromFirebase,
-  requestAllProducts,
-} from '../../redux/actions';
+import {requestAllProducts} from '../../redux/actions';
 import {styles} from './style';
-import {TextInput} from 'react-native-gesture-handler';
 
 const mapDispatchToProps = dispatch => ({dispatch});
 
 const Home = connect(mapDispatchToProps)(props => {
-  const [heart, setHeart] = useState(false);
-
   const {dispatch} = props;
   const state = useSelector(state => state.app);
 
@@ -28,7 +27,11 @@ const Home = connect(mapDispatchToProps)(props => {
       <View style={styles.container}>
         <Image source={{uri: item.image}} style={styles.image} />
         <TouchableOpacity style={styles.heart}>
-          <MaterialCommunityIcons name="heart" color={'#FF6E31'} size={25} />
+          <MaterialCommunityIcons
+            name="heart-outline"
+            color={'#FF6E31'}
+            size={25}
+          />
         </TouchableOpacity>
         <View style={styles.descon}>
           <Text style={styles.category}>{item.category}</Text>

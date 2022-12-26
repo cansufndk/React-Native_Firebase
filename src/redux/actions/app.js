@@ -27,12 +27,14 @@ export const userSignUp = payload => async (dispatch, getState) => {
 
 export const createUserFb = payload => async (dispatch, getState) => {
   //createuser
-  const {email, password} = getState().app;
+  const {email, password, username, lastname} = getState().app;
   dispatch({type: constants.REQUEST_SIGN_UP});
   try {
     await auth.createUserFb(email, password);
     dispatch({
       type: constants.REQUEST_SIGN_UP,
+      payload: username,
+      lastname,
     });
   } catch (error) {
     console.log(error);

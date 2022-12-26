@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
   main: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#FCFAFA',
   },
   inputcon: {
     marginVertical: 5,

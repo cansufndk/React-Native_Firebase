@@ -5,7 +5,10 @@ const INITIAL_STATE = {
   username: '',
   lastname: '',
   password: '',
-  user: {},
+  user: {
+    username: '',
+    lastname: '',
+  },
   loginStatus: false,
   signupStatus: false,
 
@@ -25,7 +28,12 @@ const app = (state = INITIAL_STATE, actionObj) => {
       return {
         //kullanıcı bilgileri
         ...state,
-        user: {...state.user, [actionObj.key]: actionObj.value},
+        user: {
+          ...state.user,
+          username: actionObj.payload,
+          lastname: actionObj.lastname,
+          [actionObj.key]: actionObj.value,
+        },
         [actionObj.key]: actionObj.value,
       };
 
