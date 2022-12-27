@@ -11,11 +11,17 @@ export const styles = StyleSheet.create({
   },
 
   image: {
-    width: '50%',
-    height: '30%',
+    width: '70%',
+    height: '40%',
     resizeMode: 'contain',
     alignSelf: 'center',
     marginVertical: 25,
+  },
+  welcome: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: colors.white,
+    letterSpacing: 2,
   },
   email: {
     fontSize: 18,

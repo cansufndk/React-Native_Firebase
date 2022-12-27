@@ -12,6 +12,8 @@ const INITIAL_STATE = {
   loginStatus: false,
   signupStatus: false,
 
+  favorites: [],
+  selectProduct: {},
   userInfo: {},
 
   products: {
@@ -21,7 +23,7 @@ const INITIAL_STATE = {
 };
 
 const app = (state = INITIAL_STATE, actionObj) => {
-  // console.log('REDUCER ACTİONS', actionObj.payload);
+  console.log('REDUCER ACTİONS', INITIAL_STATE.favorites);
 
   switch (actionObj.type) {
     case contants.SET_ACCOUNT:
@@ -65,6 +67,18 @@ const app = (state = INITIAL_STATE, actionObj) => {
       };
 
     //Products
+
+    case contants.FAVORITES_PRODUCTS:
+      return {
+        ...state,
+        favorites: actionObj.payload,
+      };
+
+    case contants.SELECT_PTODUCT:
+      return {
+        ...state,
+        selectProduct: actionObj.payload,
+      };
 
     case contants.REQUEST_GET_PRODUCTS_FB:
       return {

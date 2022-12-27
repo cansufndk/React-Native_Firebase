@@ -9,7 +9,11 @@ import {
 } from 'react-native';
 import {connect, useSelector} from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {requestAllProducts} from '../../redux/actions';
+import {
+  favoritesProducts,
+  requestAllProducts,
+  selectProduct,
+} from '../../redux/actions';
 import {styles} from './style';
 
 const mapDispatchToProps = dispatch => ({dispatch});
@@ -26,7 +30,9 @@ const Home = connect(mapDispatchToProps)(props => {
     return (
       <View style={styles.container}>
         <Image source={{uri: item.image}} style={styles.image} />
-        <TouchableOpacity style={styles.heart}>
+        <TouchableOpacity
+          style={styles.heart}
+          onPress={() => dispatch(favoritesProducts(item))}>
           <MaterialCommunityIcons
             name="heart-outline"
             color={'#FF6E31'}
@@ -37,7 +43,9 @@ const Home = connect(mapDispatchToProps)(props => {
           <Text style={styles.category}>{item.category}</Text>
           <Text style={styles.title}>{item.title}</Text>
           <Text style={styles.price}>{item.price} TL</Text>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => console.log('click')}>
             <Text style={styles.buttontext}>Sepete Ekle</Text>
           </TouchableOpacity>
         </View>

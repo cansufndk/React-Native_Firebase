@@ -11,11 +11,12 @@ export const setAccount = (key, value) => ({
 export const userSignUp = payload => async (dispatch, getState) => {
   //loginuser
   const {email, password} = getState().app;
-  dispatch({type: constants.REQUEST_SIGN_IN});
+  dispatch({type: constants.REQUEST_SIGN_IN, payload: user});
 
   try {
     await auth.userSignUp(email, password);
-    const user = await auth.getUserInfo();
+    const user = await auth.getUserInfo(user);
+    console.log(user);
     dispatch({
       type: constants.REQUEST_SIGN_IN,
       payload: user,
@@ -54,7 +55,6 @@ export const userSignout = payload => async dispatch => {
 //* DB Firebase *//
 
 export const requestAllProducts = payload => async (dispatch, getState) => {
-  //const {response} = await products.getAllProducts();
   //axios ile dataları çekmek için
   try {
     const response = await products.getAllProducts(response);
@@ -64,6 +64,35 @@ export const requestAllProducts = payload => async (dispatch, getState) => {
     console.log('DATA ERROR', error);
   }
 };
+
+export const favoritesProducts = payload => async (dispatch, getState) => {
+  //favoriye eklemek için
+  const user = auth.getUserInfo();
+  //const {user} = getState().app;
+  const favs = await products.addProductToFirebase(payload, user);
+  dispatch({type: constants.FAVORITES_PRODUCTS, payload: favs});
+};
+
+export const getAllProductsToFirebase =
+  payload => async (dispatch, getState) => {
+    const user = auth.getUserInfo();
+    const favs = await products.getAllProductToFirebase(user);
+    dispatch({type: constants.GET_FAVORITES_PRODUCTS, payload: favs});
+  };
+
+export const selectProduct = (payload = async (dispatch, getState) => {
+  const select = dispatch({
+    type: constants.SELECT_PTODUCT,
+    payload: selectProduct,
+  });
+  console.log('Select Product Actions', select);
+
+  try {
+    return select;
+  } catch (error) {
+    console.log('Select Product Actions', error);
+  }
+});
 
 export const requestAddProductsToFirebase =
   payload => async (dispatch, getState) => {

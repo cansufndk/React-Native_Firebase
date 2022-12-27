@@ -12,7 +12,6 @@ const Profile = connect(
 )(props => {
   const state = useSelector(state => state.app);
   const {dispatch} = props;
-  console.log(state);
 
   const logout = () => {
     dispatch(userSignout());
@@ -20,6 +19,8 @@ const Profile = connect(
   return (
     <View style={styles.container}>
       <Image source={require('../../assets/login.png')} style={styles.image} />
+      <Text style={styles.welcome}>Welcome!</Text>
+
       <View>
         <Text style={styles.username}>Name: {state.username}</Text>
         <Text style={styles.username}>Last Name: {state.lastname}</Text>
