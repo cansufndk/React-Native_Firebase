@@ -75,6 +75,8 @@ const app = (state = INITIAL_STATE, actionObj) => {
         productsFb: actionObj.payload,
       };
 
+    case contants.DELETE_PRODUCTS:
+      return {};
     case contants.REQUEST_GET_ALL_PRODUCTS: {
       //axios ile dataları çekiyoruz
       return {

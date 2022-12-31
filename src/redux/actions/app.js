@@ -79,6 +79,19 @@ export const getProductFb = payload => async dispatch => {
   }
 };
 
+export const deleteProductFb = (key, value) => async (dispatch, getState) => {
+  const user = auth.getUserInfo(user);
+  const {data, success} = await products.deleteProductFb(key, value, user);
+
+  if (success) {
+    dispatch({
+      type: constants.DELETE_PRODUCTS,
+      payload: data,
+    });
+  } else {
+  }
+};
+
 export const setFavoritesFb = payload => async dispatch => {
   //set favori fb
   const user = auth.getUserInfo(user);

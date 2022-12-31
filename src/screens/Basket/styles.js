@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
   },
   main: {
     flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
     margin: 5,
     backgroundColor: 'white',
@@ -22,6 +23,12 @@ export const styles = StyleSheet.create({
     borderRadius: 3,
     borderColor: '#ddd',
     borderWidth: 1,
+    padding: 5,
+    backgroundColor: '#FFEBB7',
+  },
+  desc: {
+    width: '55%',
+    height: 150,
     padding: 5,
   },
   category: {
@@ -40,10 +47,10 @@ export const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: 'bold',
     color: '#424642',
-    marginVertical: 5,
+    marginVertical: 2,
   },
   image: {
-    width: '100%',
+    width: '45%',
     height: 150,
     borderRadius: 5,
     resizeMode: 'contain',
@@ -54,13 +61,13 @@ export const styles = StyleSheet.create({
     top: 5,
   },
   button: {
-    width: '100%',
-    padding: 7,
+    width: '40%',
+    padding: 4,
     backgroundColor: '#FF6E31',
     borderRadius: 3,
   },
   buttontext: {
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: 'bold',
     textAlign: 'center',
     color: 'white',

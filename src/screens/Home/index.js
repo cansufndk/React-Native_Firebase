@@ -68,9 +68,7 @@ const Home = connect(mapDispatchToProps)(props => {
   };
 
   const addProduct = item => {
-    dispatch(addProductsFb(item));
-
-    /* const prod = state.productsFb.filter(p => p.id === item.id);
+    const prod = state.productsFb.filter(p => p.id === item.id);
     if (prod.length > 0) {
       showMessage({
         message: 'This in the Basket!',
@@ -84,7 +82,7 @@ const Home = connect(mapDispatchToProps)(props => {
         type: 'success',
         icon: 'success',
       });
-    }*/
+    }
   };
 
   const renderItem = ({item, index}) => {

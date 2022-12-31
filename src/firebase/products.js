@@ -29,7 +29,7 @@ export const addProductFb = async (item, uid) => {
     const product = {key: fav.key};
     return {data: {product}, success: true};
   } catch (error) {
-    console.log('APİ ERROR FAV', error);
+    console.log('Add Product Err', error);
   }
 };
 
@@ -39,7 +39,7 @@ export const getProductsFb = async key => {
     const item = (await addProduct.child(key).once('value')).val();
     return {data: item, success: true};
   } catch (error) {
-    console.log('APİ ERROR GET', error);
+    console.log('Get Favori Err', error);
   }
 };
 
@@ -58,7 +58,7 @@ export const getAllProductsFb = async uid => {
     }
     const productsFb = [];
 
-    for (let i = 0; i < keys.length; i++) {
+    for (let i = 0; i < keys?.length; i++) {
       let product = (await getProductsFb(keys[i])).data;
       productsFb.push({
         ...product,
@@ -68,7 +68,7 @@ export const getAllProductsFb = async uid => {
     }
     return {data: productsFb, success: true};
   } catch (error) {
-    console.log('get data', error);
+    console.log('get All data', error);
   }
 };
 
@@ -83,7 +83,7 @@ export const setFavoritesFb = async (item, uid) => {
     const favs = {key: fav.key};
     return {data: {favs}, success: true};
   } catch (error) {
-    console.log('APİ ERROR FAV', error);
+    console.log('Set Favori Err', error);
   }
 };
 
@@ -93,7 +93,7 @@ export const getFavoritesFb = async key => {
     const item = (await favsRef.child(key).once('value')).val();
     return {data: item, success: true};
   } catch (error) {
-    console.log('APİ ERROR GET', error);
+    console.log('Get Favori Fb', error);
   }
   return {data: null, success: false};
 };
@@ -124,7 +124,7 @@ export const getAllFavoritesFb = async uid => {
 
     return {data: favorites, success: true};
   } catch (error) {
-    console.log('get data', error);
+    console.log('Get All Favori Fb', error);
   }
   return {data: null, success: false};
 };
@@ -142,7 +142,7 @@ export const firebaseFavoriListener = async (uid, callBack) => {
 
     return {data: null, success: true};
   } catch (error) {
-    console.error(error);
+    console.error('Favori Listener Err', error);
   }
 
   return {data: null, success: false};
@@ -161,24 +161,21 @@ export const firebaseProductListener = async (uid, callback) => {
 
     return {data: null, success: true};
   } catch (error) {
-    console.log(error);
+    console.error('Favori Listener Err', error);
   }
   return {data: null, success: false};
 };
 
-/*export const firebaseFavListener = async (uid, callback) => {
-  if (global.firebaseFavListenerOff) {
-    global.firebaseFavListenerOff();
-  }
-
+export const deleteProductFb = async (key, value, uid) => {
   try {
-    const ref = database().ref(`/user_favori/${uid}`);
-    ref.on('value', d => callback(d.val()));
+    const userP = database().ref(`/user_products/${uid}/${key}`);
+    await userP.remove();
 
-    global.firebaseFavListenerOff = ref.off;
+    const product = database().ref(`/products/${value}`);
+    await product.remove();
 
-    return null;
+    return {data: {}, success: true};
   } catch (error) {
-    console.log('firebase fav list', error);
+    console.error('Delete Err', error);
   }
-};*/
+};

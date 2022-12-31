@@ -23,6 +23,7 @@ export const styles = StyleSheet.create({
     borderColor: '#ddd',
     borderWidth: 1,
     padding: 5,
+    backgroundColor: '#FFEBB7',
   },
   category: {
     fontWeight: 'bold',
@@ -44,7 +45,7 @@ export const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 150,
+    height: 120,
     borderRadius: 5,
     resizeMode: 'contain',
   },
