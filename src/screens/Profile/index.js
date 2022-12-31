@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import {connect, useSelector} from 'react-redux';
-import {setAccount, userSignUp, userSignout} from '../../redux/actions/app';
+import {logOutUser} from '../../redux/actions/app';
 import {styles} from './styles';
 const mapDispatchToProps = dispatch => ({dispatch});
 //const mapStateToProps = states => ({app: states.app});
@@ -14,7 +14,7 @@ const Profile = connect(
   const {dispatch} = props;
 
   const logout = () => {
-    dispatch(userSignout());
+    dispatch(logOutUser());
   };
   return (
     <View style={styles.container}>
@@ -22,8 +22,6 @@ const Profile = connect(
       <Text style={styles.welcome}>Welcome!</Text>
 
       <View>
-        <Text style={styles.username}>Name: {state.username}</Text>
-        <Text style={styles.username}>Last Name: {state.lastname}</Text>
         <Text style={styles.email}>E-Mail: {state.email}</Text>
       </View>
       <TouchableOpacity onPress={logout} style={styles.out}>

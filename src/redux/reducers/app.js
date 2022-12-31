@@ -1,30 +1,25 @@
+import {constants} from 'buffer';
 import * as contants from '../constans';
 
 const INITIAL_STATE = {
   email: '',
-  username: '',
-  lastname: '',
   password: '',
-  user: {
-    username: '',
-    lastname: '',
-  },
+  user: {},
   loginStatus: false,
-  signupStatus: false,
+  createStatus: false,
 
   favorites: [],
-  selectProduct: {},
-  userInfo: {},
+  selectProduct: [],
 
   products: {
     list: [],
-    id: '',
+    limit: 0,
+    total: 0,
+    skip: 0,
   },
 };
 
 const app = (state = INITIAL_STATE, actionObj) => {
-  console.log('REDUCER ACTİONS', INITIAL_STATE.favorites);
-
   switch (actionObj.type) {
     case contants.SET_ACCOUNT:
       return {
@@ -32,58 +27,52 @@ const app = (state = INITIAL_STATE, actionObj) => {
         ...state,
         user: {
           ...state.user,
-          username: actionObj.payload,
-          lastname: actionObj.lastname,
           [actionObj.key]: actionObj.value,
         },
         [actionObj.key]: actionObj.value,
       };
 
-    case contants.REQUEST_SIGN_IN:
+    case contants.LOGIN_FB:
       return {
         //kullanıcı giriş yapması için
         ...state,
-        password: '',
-        signupStatus: true,
+        user: actionObj.payload.user,
+        loginStatus: true,
+        createStatus: true,
       };
 
-    case contants.REQUEST_SIGN_UP:
+    case contants.CREATE_FB:
       return {
         //kullanıcı üye olması için
         ...state,
-        password: '',
-        loginStatus: true,
+        user: actionObj.payload.user,
+        password: undefined,
+        createStatus: true,
+        loginStatus: false,
       };
 
-    case contants.REQUEST_SIGN_OUT:
+    case contants.LOGOUT_FB:
       return {
         // kullanıcı çıkış yapması için
         ...state,
-        username: '',
-        lastname: '',
-        email: '',
-        signupStatus: false,
+        email: undefined,
+        password: undefined,
+        createStatus: false,
         loginStatus: false,
       };
 
     //Products
 
-    case contants.FAVORITES_PRODUCTS:
+    case contants.GET_FAVORI_FB:
       return {
         ...state,
         favorites: actionObj.payload,
       };
 
-    case contants.SELECT_PTODUCT:
+    case contants.GET_PRODUCTS_FB:
       return {
         ...state,
-        selectProduct: actionObj.payload,
-      };
-
-    case contants.REQUEST_GET_PRODUCTS_FB:
-      return {
-        ...state,
-        fbProducts: payload,
+        productsFb: actionObj.payload,
       };
 
     case contants.REQUEST_GET_ALL_PRODUCTS: {
@@ -91,13 +80,20 @@ const app = (state = INITIAL_STATE, actionObj) => {
       return {
         ...state,
         products: {
-          list: actionObj.payload,
-          id: actionObj.payload,
+          limit: actionObj.payload.limit,
+          total: actionObj.payload.total,
+          skip: actionObj.payload.skip,
+          list: actionObj.payload.products,
         },
       };
     }
 
     case contants.FIREBASE_PRODUCTS_LISTENER:
+      return {
+        ...state,
+      };
+
+    case contants.FIREBASE_FAVORITES_LISTENER:
       return {
         ...state,
       };

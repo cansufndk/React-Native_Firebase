@@ -28,7 +28,7 @@ export const getUserInfo = () => {
   return user;
 };
 
-export const userSignUp = async (email, password) => {
+export const loginUserFb = async (email, password) => {
   //kullanıcı giriş yapması için
   try {
     await auth().signInWithEmailAndPassword(email, password);
@@ -41,7 +41,7 @@ export const userSignUp = async (email, password) => {
   }
 };
 
-export const userSignout = async () => {
+export const logoutUserFb = async () => {
   //kullanıcı çıkış yapması için
   try {
     await auth().signOut();

@@ -1,94 +1,184 @@
 import database from '@react-native-firebase/database';
-import * as auth from './auth';
+import endpoints from './endpoints';
+import {get} from './service';
+
+export const getAllApiProducts = async () => {
+  let response = await get(endpoints.products);
+
+  return response;
+};
 
 export const getAllProducts = (payload = async () => {
-  //verileri databaseden çekmek için
+  //verileri çekmek için
   try {
-    const response = (await database().ref('/Products').once('value')).val();
+    const response = (await database().ref('/Product').once('value')).val();
     return response;
-  } catch (error) {}
+  } catch (error) {
+    console.log('FB Data Error', error);
+  }
 });
 
-/* 
- db ;
- ref: referans oluşturmak için
- once: tek seferlik veri okumak için
- set: verileri referans olarak verdiğimize yazar
- push: verileri göndermeden önce görmek için
- update: verileri güncellemek için
- 
-*/
-
-export const addProductToFirebase = async (payload, uid) => {
-  //favorilere eklemek için
-  const user = auth.getUserInfo(user);
-
+export const addProductFb = async (item, uid) => {
+  //sepete eklemek için
   try {
-    const ref = database().ref('/Favorites').push();
+    const ref = database().ref('/products').push();
     const key = ref.key;
-    await ref.set(payload);
-    const fav = database().ref(`/user_favs/${user}`).push();
+    await ref.set(item);
+    const fav = database().ref(`/user_products/${uid}`).push();
     await fav.set(key);
-    const favs = {key: fav.key};
-    return favs;
+    const product = {key: fav.key};
+    return {data: {product}, success: true};
   } catch (error) {
-    console.log('APİ ERROR', error);
+    console.log('APİ ERROR FAV', error);
   }
 };
 
-export const getProductToFirebase = async key => {
+export const getProductsFb = async key => {
   try {
-    const favsRef = database().ref('Favorites');
-    const elem = (await favsRef.child(key).once('value')).val();
-    return elem;
+    const addProduct = database().ref('/products');
+    const item = (await addProduct.child(key).once('value')).val();
+    return {data: item, success: true};
   } catch (error) {
-    console.log('APİ ERROR', error);
+    console.log('APİ ERROR GET', error);
   }
 };
 
-export const getAllProductToFirebase = async uid => {
-  const user = auth.getUserInfo();
+export const getAllProductsFb = async uid => {
   try {
-    let keys = (await database().ref(`/user_favs/${user}`).once('value')).val();
-    let favsKey = keys && Object.keys(keys);
-    let favsVal = keys && Object.values(keys);
+    let keys = (
+      await database().ref(`/user_products/${uid}`).once('value')
+    ).val();
+    //keys = Object.values(keys);
+    let productKey = keys && Object.keys(keys);
+    let productVal = keys && Object.keys(keys);
+
     if (keys !== null) {
       keys = Object.values(keys);
     } else {
     }
+    const productsFb = [];
 
-    const favori = [];
-
-    for (let i = 0; i < keys?.length; i++) {
-      let delfavs = (await getProductToFirebase(keys[i])).data;
-      favori.push({
-        ...delfavs,
-        key: favsKey[i],
-        value: favsVal[i],
+    for (let i = 0; i < keys.length; i++) {
+      let product = (await getProductsFb(keys[i])).data;
+      productsFb.push({
+        ...product,
+        key: productKey[i],
+        value: productVal[i],
       });
     }
-    return favori;
+    return {data: productsFb, success: true};
   } catch (error) {
-    console.log('APİ ERROR', error);
+    console.log('get data', error);
   }
 };
 
-/*
-favori
-const favorite = await (
-    await database().ref(`/Favorites/${uid}`).once('value')
-  ).val();
+export const setFavoritesFb = async (item, uid) => {
+  //favorilere eklemek için
+  try {
+    const ref = database().ref('/favorites/').push();
+    const key = ref.key;
+    await ref.set(item);
+    const fav = database().ref(`/user_favori/${uid}`).push();
+    await fav.set(key);
+    const favs = {key: fav.key};
+    return {data: {favs}, success: true};
+  } catch (error) {
+    console.log('APİ ERROR FAV', error);
+  }
+};
 
-  const favorites = await (
-    await database().ref('/Products').once('value')
-  ).val();
+export const getFavoritesFb = async key => {
+  try {
+    const favsRef = database().ref('/favorites');
+    const item = (await favsRef.child(key).once('value')).val();
+    return {data: item, success: true};
+  } catch (error) {
+    console.log('APİ ERROR GET', error);
+  }
+  return {data: null, success: false};
+};
 
-  let userFavorites = [];
-  Object.values(favorite).map(favKey =>
-    Object.values(favorites)
-      .filter(key => key === favKey)
-      .map(key => {
-        userFavorites.push({...favorites[key], id: favKey});
-      }),
-  );
-  return userFavorites;*/
+export const getAllFavoritesFb = async uid => {
+  try {
+    let keys = (
+      await database().ref(`/user_favori/${uid}`).once('value')
+    ).val();
+    //keys = Object.values(keys);
+    let favKey = keys && Object.keys(keys);
+    let favVal = keys && Object.keys(keys);
+
+    if (keys !== null) {
+      keys = Object.values(keys);
+    } else {
+    }
+    const favorites = [];
+
+    for (let i = 0; i < keys.length; i++) {
+      let favs = (await getFavoritesFb(keys[i])).data;
+      favorites.push({
+        ...favs,
+        key: favKey[i],
+        value: favVal[i],
+      });
+    }
+
+    return {data: favorites, success: true};
+  } catch (error) {
+    console.log('get data', error);
+  }
+  return {data: null, success: false};
+};
+
+export const firebaseFavoriListener = async (uid, callBack) => {
+  if (global.firebaseFavoriListenerOff) {
+    global.firebaseFavoriListenerOff();
+  }
+
+  try {
+    const ref = database().ref(`/user_favori/${uid}`);
+    ref.on('value', d => callBack(d.val()));
+
+    global.firebaseFavoriListenerOff = ref.off;
+
+    return {data: null, success: true};
+  } catch (error) {
+    console.error(error);
+  }
+
+  return {data: null, success: false};
+};
+
+export const firebaseProductListener = async (uid, callback) => {
+  if (global.firebaseProductListenerOff) {
+    global.firebaseProductListenerOff();
+  }
+
+  try {
+    const ref = database().ref(`/user_products/${uid}`);
+    ref.on('value', d => callback(d.val()));
+
+    global.firebaseProductListenerOff = ref.off;
+
+    return {data: null, success: true};
+  } catch (error) {
+    console.log(error);
+  }
+  return {data: null, success: false};
+};
+
+/*export const firebaseFavListener = async (uid, callback) => {
+  if (global.firebaseFavListenerOff) {
+    global.firebaseFavListenerOff();
+  }
+
+  try {
+    const ref = database().ref(`/user_favori/${uid}`);
+    ref.on('value', d => callback(d.val()));
+
+    global.firebaseFavListenerOff = ref.off;
+
+    return null;
+  } catch (error) {
+    console.log('firebase fav list', error);
+  }
+};*/

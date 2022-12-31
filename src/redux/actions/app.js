@@ -1,6 +1,7 @@
 import * as constants from '../constans';
 import * as auth from '../../firebase/auth';
 import * as products from '../../firebase/products';
+import axios from 'axios';
 
 export const setAccount = (key, value) => ({
   type: constants.SET_ACCOUNT,
@@ -8,45 +9,33 @@ export const setAccount = (key, value) => ({
   value,
 });
 
-export const userSignUp = payload => async (dispatch, getState) => {
+export const loginUser = payload => async (dispatch, getState) => {
   //loginuser
   const {email, password} = getState().app;
-  dispatch({type: constants.REQUEST_SIGN_IN, payload: user});
+  await auth.loginUserFb(email, password);
+  const user = auth.getUserInfo();
+  console.log('DATA LOGIN', user);
 
-  try {
-    await auth.userSignUp(email, password);
-    const user = await auth.getUserInfo(user);
-    console.log(user);
-    dispatch({
-      type: constants.REQUEST_SIGN_IN,
-      payload: user,
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  dispatch({
+    type: constants.LOGIN_FB,
+    payload: user,
+  });
 };
 
-export const createUserFb = payload => async (dispatch, getState) => {
+export const createUser = payload => async (dispatch, getState) => {
   //createuser
-  const {email, password, username, lastname} = getState().app;
-  dispatch({type: constants.REQUEST_SIGN_UP});
-  try {
-    await auth.createUserFb(email, password);
-    dispatch({
-      type: constants.REQUEST_SIGN_UP,
-      payload: username,
-      lastname,
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  const {email, password} = getState().app;
+  await auth.createUserFb(email, password);
+  const user = auth.getUserInfo();
+  dispatch({type: constants.CREATE_FB, payload: user}),
+    console.log('CREATE USER', user);
 };
 
-export const userSignout = payload => async dispatch => {
+export const logOutUser = payload => async dispatch => {
   //logout user
-  dispatch({type: constants.REQUEST_SIGN_OUT});
+  dispatch({type: constants.LOGOUT_FB});
   try {
-    await auth.userSignout();
+    await auth.logoutUserFb();
   } catch (error) {
     console.log(error);
   }
@@ -55,86 +44,96 @@ export const userSignout = payload => async dispatch => {
 //* DB Firebase *//
 
 export const requestAllProducts = payload => async (dispatch, getState) => {
-  //axios ile dataları çekmek için
-  try {
-    const response = await products.getAllProducts(response);
+  const {data, success} = await products.getAllApiProducts();
 
-    dispatch({type: constants.REQUEST_GET_ALL_PRODUCTS, payload: response});
-  } catch (error) {
-    console.log('DATA ERROR', error);
+  if (success) {
+    dispatch({
+      type: constants.REQUEST_GET_ALL_PRODUCTS,
+      payload: data,
+    });
   }
 };
 
-export const favoritesProducts = payload => async (dispatch, getState) => {
-  //favoriye eklemek için
+export const addProductsFb = payload => async (dispatch, getState) => {
+  //sepete eklemek için
+  const user = auth.getUserInfo(user);
+  const {data, success} = await products.addProductFb(payload, user);
+
+  if (success) {
+    dispatch({
+      type: constants.ADD_PRODUCTS_FB,
+      payload: data,
+    });
+  } else {
+  }
+};
+
+export const getProductFb = payload => async dispatch => {
+  const user = auth.getUserInfo(user);
+  const {data, success} = await products.getAllProductsFb(user);
+  if (success) {
+    dispatch({
+      type: constants.GET_PRODUCTS_FB,
+      payload: data,
+    });
+  }
+};
+
+export const setFavoritesFb = payload => async dispatch => {
+  //set favori fb
+  const user = auth.getUserInfo(user);
+  const {data, success} = await products.setFavoritesFb(payload, user);
+  if (success) {
+    dispatch({type: constants.SET_FAVORI_FB, payload: data});
+  } else {
+  }
+};
+
+export const getFavoritesFb = payload => async dispatch => {
+  const user = auth.getUserInfo(user);
+  const {data, success} = await products.getAllFavoritesFb(user);
+  if (success) {
+    dispatch({type: constants.GET_FAVORI_FB, payload: data});
+  } else {
+  }
+};
+
+export const firebaseFavoriListener = payload => async (dispatch, getState) => {
   const user = auth.getUserInfo();
-  //const {user} = getState().app;
-  const favs = await products.addProductToFirebase(payload, user);
-  dispatch({type: constants.FAVORITES_PRODUCTS, payload: favs});
-};
 
-export const getAllProductsToFirebase =
-  payload => async (dispatch, getState) => {
-    const user = auth.getUserInfo();
-    const favs = await products.getAllProductToFirebase(user);
-    dispatch({type: constants.GET_FAVORITES_PRODUCTS, payload: favs});
-  };
+  const {off, data, success} = await products.firebaseFavoriListener(
+    user,
+    d => {
+      dispatch(getFavoritesFb());
+    },
+  );
 
-export const selectProduct = (payload = async (dispatch, getState) => {
-  const select = dispatch({
-    type: constants.SELECT_PTODUCT,
-    payload: selectProduct,
-  });
-  console.log('Select Product Actions', select);
-
-  try {
-    return select;
-  } catch (error) {
-    console.log('Select Product Actions', error);
+  if (success) {
+    dispatch({
+      type: constants.FIREBASE_FAVORITES_LISTENER,
+      payload: off,
+    });
+  } else {
   }
-});
-
-export const requestAddProductsToFirebase =
-  payload => async (dispatch, getState) => {
-    const {user} = getState().app;
-
-    const {data, success} = await products.addProductToFirebase(
-      payload,
-      user.user.uid,
-    );
-
-    if (success) {
-      dispatch({
-        type: constants.REQUEST_ADD_PRODUCT_FB,
-        payload: data,
-      });
-    } else {
-    }
-  };
-
-export const requestGetAllProductsFromFirebase =
-  payload => async (dispatch, getState) => {
-    const {userInfo} = getState().app;
-    console.log('user info', userInfo);
-
-    const data = await products.getAllPRoductsFromFirebase(userInfo.user.uid);
-    console.log(
-      'DATA',
-      dispatch({
-        type: constants.REQUEST_GET_PRODUCTS_FB,
-        payload: data,
-      }),
-    );
-  };
+};
 
 export const firebaseProductsListener =
   payload => async (dispatch, getState) => {
-    const {user} = getState().app;
-
-    const {off, data, success} = await products.firebaseProductsListener(
-      user.user.uid,
+    const user = auth.getUserInfo();
+    const {off, data, success} = await products.firebaseProductListener(
+      user,
       d => {
-        dispatch(requestAddProductsToFirebase());
+        //burada bir filtreleme yapılabilir, tüm datayı yeniden çekmek yerine sadece yeni değişiklikler belirlenip tek tek sadece yeni eklenen datalar çekilebilir
+        //amaç çalışma mantığını anlamak olduğu için şimdilik göz ardı edebiliriz
+        //firebase benzeri cloud çözümlerinde sunucu taraflı performansla ilgili bir endişemiz olmadığı için tekrarlı requestler problem oluşturmaz ancak ağ performansından dolayı verileri geç gelecektir
+        //yine de realtime database yerine collections kullarak bunun önüne geçmek gerekir (koleksiyonlar, karmaşık sorgular oluşturmamızı kolaylaştırır ve daha çok seçenek sunar)
+
+        //realtime database karmaşık veri ilişkileri olan, n-n ve ya 1-n gibi ilişkileri olan verilerle başa çıkmada yetersizdir
+
+        //özellikle x kullanıcısına ait y verileri ya da y verisine sahip x kullanıcıları tarzı sorgular çok yavaş çalışır
+
+        // burada kullanıcı verisi takip ediliyor ve yapılan her değişiklikte kullanıcıya ait tüm veri baştan çekiliyor
+        dispatch(getProductFb());
       },
     );
 

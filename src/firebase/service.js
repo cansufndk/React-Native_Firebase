@@ -1,4 +1,4 @@
-import endpoints, {baseurl} from '../products/endpoints';
+import endpoints, {baseurl} from './endpoints';
 
 export const post = (endpoint, body) => {
   return new Promise((resolve, reject) => {
@@ -6,11 +6,11 @@ export const post = (endpoint, body) => {
     const headers = {...getHeaders(endpoint)};
     const t1 = new Date().getTime();
 
-    console.log(
+    /* console.log(
       `Request.${method} start : ` + baseurl + endpoint,
       body,
       headers,
-    );
+    );*/
 
     fetch(baseurl + endpoint, {method, body, headers})
       .then(convertJson)
@@ -31,10 +31,10 @@ export const get = endpoint => {
     const headers = {...getHeaders(endpoint)};
     const t1 = new Date().getTime();
 
-    console.log(
+    /* console.log(
       `Request.${method} start : ` + baseurl + endpoint.replace(baseurl, ''),
       headers,
-    );
+    );*/
 
     fetch(baseurl + endpoint, {method, headers})
       .then(convertJson)
@@ -66,12 +66,12 @@ const processResponse = (endpoint, res, t1, method) => {
       : null
     : null;
 
-  console.log(
+  /* console.log(
     `Request.${method} finish : ` + endpoint.replace(baseurl, ''),
     `[${status}]`,
     `${t2 - t1}ms`,
     data,
-  );
+  );*/
   return {status, success, data};
 };
 

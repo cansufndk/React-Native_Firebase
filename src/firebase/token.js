@@ -2,8 +2,8 @@ import moment from 'moment';
 //import * as endpoints from './endpoints';
 //import { post } from './service';
 
-import {SLEEP} from '~/utils/core/sleep';
-import {setItem, getItem} from '~/utils/core/storage/mmkv';
+import {SLEEP} from '../utils/sleep';
+import {setItem, getItem} from '../utils/mmkv';
 //import store from '~/store';
 
 class Token {

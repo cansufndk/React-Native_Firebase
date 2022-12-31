@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {View} from 'react-native';
 import {Navigation} from '../src/navigation';
 import store from '../src/redux';
@@ -8,7 +8,7 @@ import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 
 const App = () => {
-  return (
+  return useMemo(() => (
     <Provider store={store}>
       <PersistGate persistor={persistStore(store)}>
         <View style={{flex: 1}}>
@@ -17,7 +17,7 @@ const App = () => {
         </View>
       </PersistGate>
     </Provider>
-  );
+  ));
 };
 
 export default App;
