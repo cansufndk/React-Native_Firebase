@@ -113,7 +113,7 @@ export const getAllFavoritesFb = async uid => {
     }
     const favorites = [];
 
-    for (let i = 0; i < keys.length; i++) {
+    for (let i = 0; i < keys?.length; i++) {
       let favs = (await getFavoritesFb(keys[i])).data;
       favorites.push({
         ...favs,
@@ -166,16 +166,48 @@ export const firebaseProductListener = async (uid, callback) => {
   return {data: null, success: false};
 };
 
-export const deleteProductFb = async (key, value, uid) => {
+export const deleteFavoritesFb = async (key, value, uid) => {
   try {
-    const userP = database().ref(`/user_products/${uid}/${key}`);
+    const userP = database().ref(`/user_favori/${uid}/${key}`);
     await userP.remove();
 
-    const product = database().ref(`/products/${value}`);
+    const product = database().ref(`/favorites/${value}`);
     await product.remove();
 
     return {data: {}, success: true};
   } catch (error) {
     console.error('Delete Err', error);
+  }
+};
+
+export const updateFavorites = async value => {
+  try {
+    await database().ref(`/favorites/${value}`).update();
+    return {data: {}, success: true};
+  } catch (error) {
+    console.log('epdate favorite', error);
+  }
+};
+
+export const deleteProductFb = async (key, value, uid) => {
+  try {
+    const userProduct = database().ref(`/user_products/${uid}/${key}`);
+    await userProduct.remove();
+
+    const products = database().ref(`/products/${value}`);
+    await products.remove();
+
+    return {data: {}, success: true};
+  } catch (error) {
+    console.log('del products', error);
+  }
+};
+
+export const updateProducts = async value => {
+  try {
+    await database().ref(`/products/${value}`).update();
+    return {data: {}, success: true};
+  } catch (error) {
+    console.log('update err', error);
   }
 };

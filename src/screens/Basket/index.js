@@ -2,9 +2,10 @@ import React from 'react';
 import {View, Text, FlatList, Image, TouchableOpacity} from 'react-native';
 import {connect, useSelector} from 'react-redux';
 import {styles} from './styles';
-const mapDispatchToProps = dispatch => ({dispatch});
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {deleteProductFb} from '../../redux/actions';
+import {deleteFavoriFb, deleteProductFb} from '../../redux/actions';
+
+const mapDispatchToProps = dispatch => ({dispatch});
 
 const Basket = connect(mapDispatchToProps)(props => {
   const {dispatch} = props;
@@ -16,7 +17,7 @@ const Basket = connect(mapDispatchToProps)(props => {
         <Image source={{uri: item.thumbnail}} style={styles.image} />
         <TouchableOpacity
           style={styles.heart}
-          onPress={() => dispatch(deleteProductFb(item.key, item.value))}>
+          onPress={() => dispatch(deleteFavoriFb(item.key, item.value))}>
           <MaterialCommunityIcons name="heart" color={'#FF6E31'} size={25} />
         </TouchableOpacity>
         <View style={styles.desc}>
@@ -25,7 +26,7 @@ const Basket = connect(mapDispatchToProps)(props => {
           <Text style={styles.price}>{item.price} TL</Text>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => console.log('click')}>
+            onPress={() => dispatch(deleteProductFb(item.key, item.value))}>
             <Text style={styles.buttontext}>Delete</Text>
           </TouchableOpacity>
         </View>

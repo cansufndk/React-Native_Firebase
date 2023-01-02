@@ -37,7 +37,7 @@ export const logOutUser = payload => async dispatch => {
   try {
     await auth.logoutUserFb();
   } catch (error) {
-    console.log(error);
+    console.log('çıkış yapamadı', error);
   }
 };
 
@@ -79,10 +79,22 @@ export const getProductFb = payload => async dispatch => {
   }
 };
 
-export const deleteProductFb = (key, value) => async (dispatch, getState) => {
+export const deleteFavoriFb = (key, value) => async (dispatch, getState) => {
+  const user = auth.getUserInfo(user);
+  const {data, success} = await products.deleteFavoritesFb(key, value, user);
+
+  if (success) {
+    dispatch({
+      type: constants.DELETE_FAVORITES,
+      payload: data,
+    });
+  } else {
+  }
+};
+
+export const deleteProductFb = (key, value) => async dispatch => {
   const user = auth.getUserInfo(user);
   const {data, success} = await products.deleteProductFb(key, value, user);
-
   if (success) {
     dispatch({
       type: constants.DELETE_PRODUCTS,
@@ -158,3 +170,15 @@ export const firebaseProductsListener =
     } else {
     }
   };
+
+export const updateFavorite = value => async dispatch => {
+  const {data, success} = await products.updateFavorites(value);
+
+  if (success) {
+    dispatch({
+      type: constants.UPDATE_FAVORITES,
+      payload: data,
+    });
+  } else {
+  }
+};

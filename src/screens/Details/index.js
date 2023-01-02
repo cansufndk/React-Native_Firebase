@@ -4,7 +4,7 @@ import {View, Text, FlatList, Image, TouchableOpacity} from 'react-native';
 import {
   firebaseProductsListener,
   addProductsFb,
-  deleteProductFb,
+  deleteFavoriFb,
 } from '../../redux/actions';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {styles} from './styles';
@@ -51,7 +51,7 @@ const Details = connect(mapDispatchToProps)(props => {
         <Image source={{uri: item.thumbnail}} style={styles.image} />
         <TouchableOpacity
           style={styles.heart}
-          onPress={() => dispatch(deleteProductFb(item.key, item.value))}>
+          onPress={() => dispatch(deleteFavoriFb(item.key, item.value))}>
           <MaterialCommunityIcons name="heart" color={'#FF6E31'} size={28} />
         </TouchableOpacity>
         <Text style={styles.category}>{item.category}</Text>

@@ -37,7 +37,7 @@ export const loginUserFb = async (email, password) => {
       message: authErrorMessage(error.code),
       type: 'danger',
     });
-    console.log(error);
+    console.log('Login olamadı', error);
   }
 };
 
@@ -46,6 +46,6 @@ export const logoutUserFb = async () => {
   try {
     await auth().signOut();
   } catch (error) {
-    console.log(error);
+    console.log('çıkış yapamadı', error);
   }
 };
